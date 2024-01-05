@@ -45,9 +45,9 @@ jobs:
           gcloud auth activate-service-account --key-file service-account.json
           rm service-account.json
 
-      # - name: Configure GCP
-      #   run: |
-      #     gcloud components install kubectl
+      - name: Configure GCP
+        run: |
+          gcloud components install kubectl
       #     gcloud components install gke-gcloud-auth-plugin
       #     gcloud container clusters get-credentials multi-cluster --region=us-west1-a
       #     gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
