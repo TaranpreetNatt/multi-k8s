@@ -40,7 +40,7 @@ jobs:
           source $HOME/google-cloud-sdk/path.bash.inc
       
       - name: Convert secret to JSON file
-        run: echo ${{ secrets.GCP_SA_KEY}} > service-account.json
+        run: echo '${{ secrets.GCP_SA_KEY}}' > service-account.json
 
       - name: GCP Auth
         run: |
