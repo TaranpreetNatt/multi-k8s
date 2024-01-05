@@ -16,5 +16,5 @@ jobs:
       - name: Check directory Files
         run: ls
       - name: Check docker version
-        run: echo docker --version
+        run: docker --version
     
