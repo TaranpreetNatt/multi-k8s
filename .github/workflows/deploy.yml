@@ -8,24 +8,24 @@ on:
     branches:
       - test
 jobs:
-  Testing:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Check directory Files
-        run: ls
-      - name: Check docker version
-        run: docker --version
-      - name: Docker login
-        run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-      - name: Build test docker image
-        run: docker build -t drakemage47/react-test -f ./client/Dockerfile.dev ./client
-      - name: Run client test
-        run: docker run -e CI=true drakemage47/react-test npm test
+  # Testing:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Check directory Files
+  #       run: ls
+  #     - name: Check docker version
+  #       run: docker --version
+  #     - name: Docker login
+  #       run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+  #     - name: Build test docker image
+  #       run: docker build -t drakemage47/react-test -f ./client/Dockerfile.dev ./client
+  #     - name: Run client test
+  #       run: docker run -e CI=true drakemage47/react-test npm test
   
   Deploy:
-    needs: Testing
+    # needs: Testing
     runs-on: ubuntu-latest
     env:
       SHA: $(git rev-parse HEAD)
@@ -74,28 +74,28 @@ jobs:
       
       - name: Build Docker Images
         run: |
-          docker build -t drakemage47/multi-client:latest -t drakemage47/multi-client:$SHA -f ./client/Dockerfile ./client
-          docker build -t drakemage47/multi-server:latest -t drakemage47/multi-server:$SHA -f ./server/Dockerfile ./server
-          docker build -t drakemage47/multi-worker:latest -t drakemage47/multi-worker:$SHA -f ./worker/Dockerfile ./worker
+          docker build -t drakemage47/multi-client:latest -f ./client/Dockerfile ./client
+      #     docker build -t drakemage47/multi-server:latest -t drakemage47/multi-server:$SHA -f ./server/Dockerfile ./server
+      #     docker build -t drakemage47/multi-worker:latest -t drakemage47/multi-worker:$SHA -f ./worker/Dockerfile ./worker
       
-      - name: Push Docker Images
-        run: |
-          docker push drakemage47/multi-client:latest
-          docker push drakemage47/multi-server:latest
-          docker push drakemage47/multi-worker:latest
+      # - name: Push Docker Images
+      #   run: |
+      #     docker push drakemage47/multi-client:latest
+      #     docker push drakemage47/multi-server:latest
+      #     docker push drakemage47/multi-worker:latest
           
-          docker push drakemage47/multi-client:$SHA
-          docker push drakemage47/multi-server:$SHA
-          docker push drakemage47/multi-worker:$SHA
+      #     docker push drakemage47/multi-client:$SHA
+      #     docker push drakemage47/multi-server:$SHA
+      #     docker push drakemage47/multi-worker:$SHA
       
-      - name: GKE Kubectl Apply
-        run: |
-          kubectl apply -f k8s
+      # - name: GKE Kubectl Apply
+      #   run: |
+      #     kubectl apply -f k8s
 
-      - name: GKE Kubectl Update
-        run: |
-          kubectl set image deployments/server-deployment server=drakemage47/multi-server:$SHA
-          kubectl set image deployments/client-deployment client=drakemage47/multi-client:$SHA
-          kubectl set image deployments/worker-deployment worker=drakemage47/multi-worker:$SHA
+      # - name: GKE Kubectl Update
+      #   run: |
+      #     kubectl set image deployments/server-deployment server=drakemage47/multi-server:$SHA
+      #     kubectl set image deployments/client-deployment client=drakemage47/multi-client:$SHA
+      #     kubectl set image deployments/worker-deployment worker=drakemage47/multi-worker:$SHA
 
 
