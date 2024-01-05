@@ -34,6 +34,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: install GCP sdk
+        run: |
+          curl https://sdk.cloud.google.com | bash
+          echo "$HOME/google-cloud-sdk/bin" >> $GITHUB_PATH
+
       - name: GCP version check
         run: gcloud --version
 
