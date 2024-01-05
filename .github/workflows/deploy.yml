@@ -17,4 +17,8 @@ jobs:
         run: ls
       - name: Check docker version
         run: docker --version
+      - name: Build test docker image
+        run: docker build -t drakemage47/react-test -f ./client/Dockerfile.dev ./client
+      - name: Run client test
+        run: docker run -e CI=true drakemage47/react-test npm test
     
