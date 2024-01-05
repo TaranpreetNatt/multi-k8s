@@ -74,7 +74,8 @@ jobs:
       
       - name: Build Docker Images
         run: |
-          docker build -t drakemage47/multi-client:latest -f ./client/Dockerfile ./client
+          echo $SHA
+          docker build -t drakemage47/multi-client:latest -t drakemage47/multi-client:$SHA -f ./client/Dockerfile ./client
       #     docker build -t drakemage47/multi-server:latest -t drakemage47/multi-server:$SHA -f ./server/Dockerfile ./server
       #     docker build -t drakemage47/multi-worker:latest -t drakemage47/multi-worker:$SHA -f ./worker/Dockerfile ./worker
       
