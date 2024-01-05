@@ -53,19 +53,19 @@ jobs:
       - name: Configure GCP
         run: |
           gcloud components install kubectl
-      #     gcloud components install gke-gcloud-auth-plugin
-      #     gcloud container clusters get-credentials multi-cluster --region=us-west1-a
-      #     gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
-      #     gcloud config set compute/zone us-west1-a
+          gcloud components install gke-gcloud-auth-plugin
+          gcloud container clusters get-credentials multi-cluster --region=us-west1-a
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+          gcloud config set compute/zone us-west1-a
 
-      # - name: Check configuration versions
-      #   run: |
-      #     kubectl version --client
-      #     gke-gcloud-auth-plugin --version
+      - name: Check configuration versions
+        run: |
+          kubectl version --client
+          gke-gcloud-auth-plugin --version
           
-      # - name: Docker login 
-      #   run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Docker login 
+        run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       
-      # - name: testing kubectl
-      #   run: |
-      #     kubectl get namespaces
+      - name: testing kubectl
+        run: |
+          kubectl get namespaces
