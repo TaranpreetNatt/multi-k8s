@@ -3,29 +3,29 @@ run-name: ${{ github.actor }}
 on:
   pull_request:
     branches:
-      - test
+      - main
   push:
     branches:
-      - test
+      - main
 jobs:
-  # Testing:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #     - name: Check directory Files
-  #       run: ls
-  #     - name: Check docker version
-  #       run: docker --version
-  #     - name: Docker login
-  #       run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-  #     - name: Build test docker image
-  #       run: docker build -t drakemage47/react-test -f ./client/Dockerfile.dev ./client
-  #     - name: Run client test
-  #       run: docker run -e CI=true drakemage47/react-test npm test
+  Testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check directory Files
+        run: ls
+      - name: Check docker version
+        run: docker --version
+      - name: Docker login
+        run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Build test docker image
+        run: docker build -t drakemage47/react-test -f ./client/Dockerfile.dev ./client
+      - name: Run client test
+        run: docker run -e CI=true drakemage47/react-test npm test
   
   Deploy:
-    # needs: Testing
+    needs: Testing
     runs-on: ubuntu-latest
     env:
       SHA: ${{ github.sha }}
