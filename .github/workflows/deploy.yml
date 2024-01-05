@@ -25,6 +25,7 @@ jobs:
         run: docker run -e CI=true drakemage47/react-test npm test
   
   Deploy:
+    if: github.event_name == 'push'
     needs: Testing
     runs-on: ubuntu-latest
     env:
