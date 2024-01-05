@@ -28,7 +28,7 @@ jobs:
     # needs: Testing
     runs-on: ubuntu-latest
     env:
-      SHA: $(git rev-parse HEAD)
+      SHA: ${{ github.sha }}
       CLOUDSDK_CORE_DISABLE_PROMPTS: 1
     steps:
       - name:
