@@ -33,22 +33,17 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # - name: Install GCP SDK
-      #   run: |
-      #     curl https://sdk.cloud.google.com | bash > /dev/null;
-      #     source $HOME/google-cloud-sdk/path.bash.inc
       
-      - name: GCP check
+      - name: GCP version check
         run: gcloud --version
 
-      # - name: Convert secret to JSON file
-      #   run: echo '${{ secrets.GCP_SA_KEY}}' > service-account.json
+      - name: Convert secret to JSON file
+        run: echo '${{ secrets.GCP_SA_KEY}}' > service-account.json
 
-      # - name: GCP Auth
-      #   run: |
-      #     gcloud auth activate-service-account --key-file service-account.json
-      #     rm service-account.json
+      - name: GCP Auth
+        run: |
+          gcloud auth activate-service-account --key-file service-account.json
+          rm service-account.json
 
       # - name: Configure GCP
       #   run: |
